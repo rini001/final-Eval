@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: aqua;
+            display: grid;
+            justify-content: center;
+            align-items: center;
+            row-gap: 5px;
+        }
+       #input1{
+           width: 12rem;
+           height: 2rem;
+       }
+       #add{
+           width: 4rem;
+           height: 2rem;
+       }
+      #scales{
+          color: blue;
+          width: 1rem;
+          height: 1rem;
+      }
+      #con3{
+          display: grid;
+          row-gap: 5px;
+      }
+      .card{
+          border: 2px solid blue;
+          width: 14rem;
+          height: 3rem;
+          text-align: center;
+          font-weight: 50rem;
+          font-size: large;
+          color: blue;
+      }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <form>
+
+            <input id="input1" type="text" placeholder="Add task" />
+
+            <input id="add" type="submit" value="ADD" />
+            <input type="checkbox" id="scales" name="scales">
+            <!-- <label for="scales">Status</label> -->
+
+        </form>
+    </div>
+    <div id="con3"></div>
+    <!-- <div id="con2"></div> -->
+</body>
+
+</html>
+<script>
+    
+
+    var url = " https://json-server-mocker-masai.herokuapp.com/tasks"
+    fetch(url)
+        .then(function (res) {
+            console.log('res:', res)
+            //collect the stream
+            return res.json()
+
+        })
+        .then(function (final_res) {
+            // console.log('final_res:', final_res)
+          
+            appendfunc(final_res)
+        })
+
+        .catch(function (err) {
+            console.log('err:', err)
+        })
+
+    // let con = document.getElementById("con2")
+    // function appendfunc(data) {
+    //     //  console.log('data:',data)
+    //   data.forEach(function (el) {
+    //  var div = document.createElement('div')
+    //    var title = document.createElement('p')
+    //    title.innerHTML = el.title
+    //   div.append(title)
+    //   con.append(div)
+
+    //     })
+    // }
+    var products = [
+		{
+			id: 1,
+			title: "buy milk",
+			status: true,
+		},
+		{
+			id: 2,
+			title: "buy butter",
+			status: false,
+		},
+		{
+			id: 3,
+			title: "buy bread",
+			status: false,
+		},
+	];
+
+    var checkbox=document.querySelector("#scales")
+   
+    let con3 = document.getElementById("con3")
+    document.querySelector("form").addEventListener("submit", addfunc);
+    function addfunc(event) {
+		event.preventDefault();
+		var card = document.createElement("div");
+        card.setAttribute("class","card")
+		//console.log("1");
+        var output = document.querySelector("#input1").value;
+        var title = document.createElement('p')
+        title.textContent=output
+      
+       
+		card.append(title)
+       con3.append(card)
+	
+       checkbox.addEventListener("click", ticked);
+    function ticked(el) {
+        // var res = el.target.nextElementSibling
+        var res=title
+        // var res = el.target.tagName;
+        if (this.checked) {
+            res.style.color = "green";
+        }
+        else {
+            res.style.color = "red";
+        }
+    } 
+    
+}
+</script>
